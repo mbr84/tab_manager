@@ -1,6 +1,7 @@
 let tabs = {};
 const closedTabs = {};
 
+// switch to setTimeout/clearTimeout? Would simplify computer sleep
 chrome.tabs.onCreated.addListener(function(tab) {
   const now = new Date().getHours
   if (!tab.active) {
