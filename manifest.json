@@ -1,0 +1,23 @@
+{
+  "name": "Garbage Collector",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Manages tabs and prevents tab proliferation.",
+  "homepage_url": "https://github.com/mbr84",
+  "content_scripts": [{
+      "js": ["jquery.js", "contentscript.js"],
+      "matches": ["https://github.com/*"]
+    }],
+  "web_accessible_resources": ["dropdown.js"],
+  "chrome_url_overrides" : {
+    "newtab": "garbageHeap.html"
+    },
+  "background": {
+    "scripts": ["garbageCollector.js"]
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab"
+    ]
+}
