@@ -1,19 +1,30 @@
 const tabs = {};
 let protectedPages;
 
+const getProtectedPages = function() {
+  chrome.storage.local.get("protectedPages", function(result) {
+    protectedPages = Object.assign({}, result.protectedPages);
+  });
+};
+
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.storage.local.set({closedTabs: {}, protectedPages: {} })
+});
+
+getProtectedPages();
 
 chrome.storage.onChanged.addListener(function(changes) {
-  for (let area in changes) {
-    if (area === "protectedPages") {
-      Object.keys(area).forEach(key => protectedPages[key] = area[key])
-    }
+  if (area === "protectedPages") {
+    getProtectedPages();
+    chrome.tabs.query({windowId: this.windowId}, function(results) {
+      for (let tab in result) {
+        if (protectedPages.hasOwnProperty(tab.url)) {
+          clearTimeout(tabs[tab.id])
+        }
+      }
+    })
   }
 });
-
-chrome.storage.local.get("protectedPages", function(result) {
-  protectedPages = Object.assign({}, result.protectedPages);
-});
-
 
 
 const closeTab = function(tab) {
@@ -40,12 +51,12 @@ const clearTimer = function(id) {
 };
 
 chrome.tabs.onActivated.addListener(function(activeTab) {
-  debugger
   chrome.tabs.query({windowId: this.windowId}, function(results) {
+
     results.forEach((tab) => {
       if (realTab(tab) &&
         !protectedPages[tab.url] &&
-        tabs[tab.id]) {
+        !tabs[tab.id]) {
         tabs[tab.id] = setTimeout(closeTab.bind(this, tab), 3600000);
       } else if (tab.active) {
         clearTimeout(tabs[tab.id]);

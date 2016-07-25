@@ -4,16 +4,20 @@
   "manifest_version": 2,
   "description": "Manages tabs and prevents tab proliferation.",
   "browser_action": {
-    "default_title": "Garbage Collector",
+    "default_title": "Tab Collector",
     "default_popup": "popup.html",
-    "default_title": "Manage Garbage Collection"
+    "default_title": "Manage Tab Collection"
 
+  },
+  "icons": {
+    "16": "books16.png",
+    "48": "books48.png",
+    "128": "books128.png"
   },
   "homepage_url": "https://github.com/mbr84",
   "content_scripts": [{
       "js": [
         "jquery.js",
-        "garbageCollector.js",
         "contentscript.js"],
       "style":["style.scss"],
       "matches": ["<all_urls>"]

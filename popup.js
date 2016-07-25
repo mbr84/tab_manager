@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const protectPageButton = document.getElementById('protect-page');
     protectPageButton.addEventListener('click', function() {
       chrome.storage.local.get("protectedPages", function(result) {
-        result[tab.url] = true
-        chrome.storage.local.set({ protectedPages: protectedPages })
+        result.protectedPages[tab.url] = true
+        chrome.storage.local.set({ protectedPages: result.protectedPages })
       });
     });
   })
