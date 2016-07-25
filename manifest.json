@@ -3,14 +3,23 @@
   "version": "1.0",
   "manifest_version": 2,
   "description": "Manages tabs and prevents tab proliferation.",
+  "browser_action": {
+    "default_title": "Garbage Collector",
+    "default_popup": "popup.html",
+    "default_title": "Manage Garbage Collection"
+
+  },
   "homepage_url": "https://github.com/mbr84",
   "content_scripts": [{
-      "js": ["jquery.js", "contentscript.js"],
-      "matches": ["https://github.com/*"]
+      "js": [
+        "jquery.js",
+        "garbageCollector.js",
+        "contentscript.js"],
+      "style":["style.scss"],
+      "matches": ["<all_urls>"]
     }],
-  "web_accessible_resources": ["dropdown.js"],
   "chrome_url_overrides" : {
-    "newtab": "garbageHeap.html"
+    "newtab": "linksIndex.html"
     },
   "background": {
     "scripts": ["garbageCollector.js"]
@@ -19,5 +28,8 @@
     "tabs",
     "storage",
     "activeTab"
-    ]
+  ],
+  "web_accessible_resources": [
+    "preventFormLoss.js"
+  ]
 }
