@@ -7,3 +7,13 @@ chrome.storage.local.get('closedTabs', function(result) {
     }
   }
 });
+
+chrome.storage.local.get('protectedPages', function(result) {
+  for (var item in result.protectedPages) {
+    if (result.protectedPages.hasOwnProperty(item)) {
+      $("#protected-pages").append(
+        `<li><a href="${item}">${item}</a></li>`
+      )
+    }
+  }
+});

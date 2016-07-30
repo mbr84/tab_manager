@@ -14,7 +14,7 @@ chrome.runtime.onInstalled.addListener(function() {
 getProtectedPages();
 
 chrome.storage.onChanged.addListener(function(changes) {
-  if (area === "protectedPages") {
+  if (changes["protectedPages"]) {
     getProtectedPages();
     chrome.tabs.query({windowId: this.windowId}, function(results) {
       for (let tab in result) {
@@ -37,7 +37,6 @@ const closeTab = function(tab) {
 };
 
 chrome.tabs.onRemoved.addListener(function(tab) {
-
   clearTimeout(tabs[tab]);
 });
 
@@ -52,14 +51,16 @@ const clearTimer = function(id) {
 
 chrome.tabs.onActivated.addListener(function(activeTab) {
   chrome.tabs.query({windowId: this.windowId}, function(results) {
-
     results.forEach((tab) => {
-      if (realTab(tab) &&
-        !protectedPages[tab.url] &&
+      let a = document.createElement('a');
+      a.href = tab.url;
+      if (tab.active) {
+        clearTimeout(tabs[tab.id]);
+        delete tabs[tab.id];
+      } else if (realTab(tab) &&
+        !protectedPages[a.hostname] &&
         !tabs[tab.id]) {
         tabs[tab.id] = setTimeout(closeTab.bind(this, tab), 3600000);
-      } else if (tab.active) {
-        clearTimeout(tabs[tab.id]);
       }
     });
   });
