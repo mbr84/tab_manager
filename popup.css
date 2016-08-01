@@ -44,5 +44,9 @@ h2, h3 {
 
 #timer-length-wrapper {
   display: flex;
-  
+}
+
+#current-site {
+  max-width: 175px;
+  overflow: scroll;
 }

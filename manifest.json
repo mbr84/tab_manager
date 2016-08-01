@@ -1,8 +1,8 @@
 {
-  "name": "Garbage Collector",
+  "name": "Dump Truck",
   "version": "1.0",
   "manifest_version": 2,
-  "description": "Manages tabs and prevents tab proliferation.",
+  "description": "Logs and closes inactive tabs.",
   "browser_action": {
     "default_title": "Tab Collector",
     "default_popup": "popup.html",
@@ -12,7 +12,7 @@
   "icons": {
     "16": "dump-truck-16.png",
     "48": "dump-truck-48.png",
-    "128": "dumb-truck.png"
+    "128": "dump-truck.png"
   },
   "homepage_url": "https://github.com/mbr84",
   "content_scripts": [{

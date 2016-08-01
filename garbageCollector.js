@@ -1,5 +1,6 @@
 const tabs = {};
 let protectedPages;
+let timerLength;
 
 const getProtectedPages = function() {
   chrome.storage.local.get("protectedPages", function(result) {
@@ -8,10 +9,20 @@ const getProtectedPages = function() {
 };
 
 chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.local.set({closedTabs: {}, protectedPages: {} })
+  chrome.storage.local.set({closedTabs: {}, protectedPages: {}, timerLength: 3600000 })
 });
 
+const getTimerLength = function() {
+  chrome.storage.local.get("timerLength", function(result) {
+    timerLength = parseInt(result.timerLength);
+  });
+};
+
+getTimerLength();
+
 getProtectedPages();
+
+chrome.storage.local.get()
 
 chrome.storage.onChanged.addListener(function(changes) {
   if (changes["protectedPages"]) {
@@ -23,6 +34,8 @@ chrome.storage.onChanged.addListener(function(changes) {
         }
       }
     })
+  } else if (changes["timerLength"]) {
+    timerLength = parseInt(changes["timerLength"])
   }
 });
 
@@ -60,7 +73,7 @@ chrome.tabs.onActivated.addListener(function(activeTab) {
       } else if (realTab(tab) &&
         !protectedPages[a.hostname] &&
         !tabs[tab.id]) {
-        tabs[tab.id] = setTimeout(closeTab.bind(this, tab), 3600000);
+        tabs[tab.id] = setTimeout(closeTab.bind(this, tab), timerLength);
       }
     });
   });

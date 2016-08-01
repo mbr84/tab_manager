@@ -7,6 +7,8 @@ function getCurrentTabUrl(callback) {
   );
 }
 
+const timerLengths = { "timer-1": 1800000, "timer-2":3600000, "timer-3":86400000 }
+
 document.addEventListener('DOMContentLoaded', function() {
   getCurrentTabUrl(function(tab) {
     const path = tab.url
@@ -22,5 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
         chrome.storage.local.set({ protectedPages: result.protectedPages })
       });
     });
+
+  })
+  const timers = Array.from(document.getElementsByClassName('timer-length'));
+  timers.forEach((timer) => {
+    timer.addEventListener('click', function() {
+      chrome.storage.local.set({ timerLength: timerLengths[timer.id] })
+    })
   })
 });
