@@ -10,9 +10,9 @@
 
   },
   "icons": {
-    "16": "books16.png",
-    "48": "books48.png",
-    "128": "books128.png"
+    "16": "dump-truck-16.png",
+    "48": "dump-truck-48.png",
+    "128": "dumb-truck.png"
   },
   "homepage_url": "https://github.com/mbr84",
   "content_scripts": [{

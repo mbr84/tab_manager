@@ -41,3 +41,8 @@ h2, h3 {
     margin: 10px auto;
     text-align: center;
 }
+
+#timer-length-wrapper {
+  display: flex;
+  
+}
