@@ -1,6 +1,6 @@
 {
   "name": "Dump Truck",
-  "version": "1.0",
+  "version": "1.2",
   "manifest_version": 2,
   "description": "Logs and closes inactive tabs.",
   "browser_action": {
@@ -17,7 +17,6 @@
   "homepage_url": "https://github.com/mbr84",
   "content_scripts": [{
       "js": [
-        "jquery.js",
         "contentscript.js"],
       "style":["style.scss"],
       "matches": ["<all_urls>"]
